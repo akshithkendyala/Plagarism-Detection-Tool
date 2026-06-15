@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Plagiarism Checker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+    <h1>Plagiarism Checker</h1>
+
+    <button
+        class="dashboard-btn"
+        onclick="window.location.href='dashboard.html'">
+        Dashboard
+    </button>
+
+</div>
+    <h3>Upload Document 1</h3>
+    <input type="file" id="file1" accept=".txt,.pdf,.docx">
+
+    <br><br>
+
+    <h3>Upload Document 2</h3>
+    <input type="file" id="file2" accept=".txt,.pdf,.docx">
+
+    <br><br>
+
+    <button onclick="checkSimilarity()">
+        Check Plagiarism
+    </button>
+
+    <h2 id="result"></h2>
+
+    <script src="script.js"></script>
+
+    <button onclick="downloadReport()">
+        Download Report
+    </button>
+
+</body>
+
+</html>

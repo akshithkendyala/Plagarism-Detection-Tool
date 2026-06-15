@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+
+let score = localStorage.getItem("lastScore");
+
+if(score){
+    document.getElementById("avgScore").innerHTML =
+    score + "%";
+}
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<canvas id="myChart"
+style="max-width:700px;margin:auto;margin-top:40px;">
+</canvas>
+
+<script>
+
+let score = localStorage.getItem("lastScore") || 0;
+
+new Chart(document.getElementById("myChart"), {
+    type: "doughnut",
+
+    data: {
+        labels: ["Similarity", "Unique Content"],
+
+        datasets: [{
+            data: [score, 100-score]
+        }]
+    }
+});
+
+</script>
+<body>
+
+<h1>Plagiarism Dashboard</h1>
+
+<div class="dashboard">
+
+    <div class="card">
+    <h2 id="totalReports">0</h2>
+    <p>Documents Checked</p>
+    </div>
+
+    <div class="card">
+        <h2 id="avgSimilarity">0%</h2>
+        <p>Average Similarity</p>
+    </div>
+
+    <div class="card">
+        <h2>32</h2>
+        <p>High Risk Reports</p>
+    </div>
+
+    <div class="card">
+        <h2>15</h2>
+        <p>Users</p>
+    </div>
+
+</div>
+
+<h2>Recent Analysis</h2>
+
+<table>
+    <tr>
+        <th>Document</th>
+        <th>Similarity</th>
+        <th>Risk</th>
+    </tr>
+
+    <tr>
+        <td>Assignment1.pdf</td>
+        <td>93%</td>
+        <td>HIGH</td>
+    </tr>
+
+    <tr>
+        <td>Assignment2.docx</td>
+        <td>41%</td>
+        <td>MEDIUM</td>
+    </tr>
+
+</table>
+<script>
+
+async function loadStats(){
+
+    let response =
+    await fetch("http://127.0.0.1:5000/stats");
+
+    let data =
+    await response.json();
+
+    document.getElementById("totalReports")
+    .innerHTML = data.total;
+
+    document.getElementById("avgSimilarity")
+    .innerHTML = data.average + "%";
+}
+
+loadStats();
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<h2>Analytics Chart</h2>
+
+<canvas id="myChart"
+style="max-width:500px;margin:30px auto;display:block;">
+</canvas>
+
+<script>
+
+async function loadChart() {
+
+    let response = await fetch(
+        "http://127.0.0.1:5000/stats"
+    );
+
+    let data = await response.json();
+
+    new Chart(
+        document.getElementById("myChart"),
+        {
+            type: "doughnut",
+
+            data: {
+                labels: [
+                    "Similarity",
+                    "Unique Content"
+                ],
+
+                datasets: [{
+                    data: [
+                        data.average,
+                        100 - data.average
+                    ]
+                }]
+            }
+        }
+    );
+}
+
+loadChart();
+
+</script>
+</body>
+</html>
