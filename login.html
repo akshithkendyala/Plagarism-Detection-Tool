@@ -30,5 +30,26 @@
 
 <script src="login.js"></script>
 
+    <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        // Prevent the form from trying to send data to the non-existent Python server
+        e.preventDefault(); 
+        
+        // Get the values you typed into the inputs
+        const username = document.querySelector('input[type="text"]').value;
+        const password = document.querySelector('input[type="password"]').value;
+
+        // Check the credentials directly in the browser
+        if (username === "admin" && password === "admin123") {
+            alert("Login successful!");
+            window.location.href = "index.html"; // Redirects you to your main plagiarism tool page
+        } else {
+            alert("Invalid username or password.");
+        }
+    });
+    </script>
+</body>
+</html>
+
 </body>
 </html>
